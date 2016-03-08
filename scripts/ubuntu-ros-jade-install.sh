@@ -18,11 +18,10 @@ sudo apt-get install -y ros-jade-desktop-full
 # rosdep enables you to easily install system dependencies for source you want to compile
 # and is required to run some core components in ROS.
 sudo rosdep init
-rosdep update
+su vagrant -l -c 'rosdep update'
 
 # Make ROS environment variables automatically loaded on each new bash session
-echo "source /opt/ros/jade/setup.bash" >> ~/.bashrc
-source ~/.bashrc
+echo "source /opt/ros/jade/setup.bash" >> /home/vagrant/.bashrc
 
 # Installing rosinstall (http://docs.ros.org/independent/api/rosinstall/html/)
 sudo apt-get install -y python-rosinstall

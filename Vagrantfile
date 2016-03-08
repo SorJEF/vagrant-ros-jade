@@ -8,9 +8,6 @@ cpus =   ENV['VAGRANT_ROS_JADE_CORES']   || '2'
 # Video memory setting for VirtualBox machine
 vram =   ENV['VAGRANT_ROS_JADE_VRAM']    || '64'
 
-# Require https://github.com/aidanns/vagrant-reload
-Vagrant.require_plugin "vagrant-reload"
-
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -83,8 +80,10 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get install -y apache2
   # SHELL
 
-  config.vm.provision :shell, path: "scripts/apt-reset.sh", privileged: false
-  config.vm.provision :shell, path: "scripts/install-desktop.sh", privileged: false
-  config.vm.provision :reload
-  config.vm.provision :shell, path: "scripts/ubuntu-ros-jade-install.sh", privileged: false
+  config.vm.provision :shell, path: "scripts/apt-reset.sh"
+  config.vm.provision :shell, path: "scripts/install-desktop.sh"
+  if Vagrant.has_plugin?("vagrant-reload")
+      config.vm.provision :reload
+  end
+  config.vm.provision :shell, path: "scripts/ubuntu-ros-jade-install.sh"
 end
